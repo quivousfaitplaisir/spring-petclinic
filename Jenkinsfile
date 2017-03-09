@@ -34,6 +34,7 @@ pipeline {
 		}
 		stage('staging') {
 	  		steps {
+	  			deleteDir()
 	  			unstash "jar"
 	  			sh 'ls -l target'
 	  			sleep 5
@@ -46,6 +47,7 @@ pipeline {
     	}
     	stage('deploy') {
 	  		steps {
+	  			deleteDir()
 	  			unstash "jar"
 	  			sh 'ls -l target'
 	  			sleep 5
