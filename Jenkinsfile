@@ -5,7 +5,12 @@ pipeline {
 		stage('build & unit tests') {
 	  		agent { label 'build' }
 	  		steps {
-	  			sleep 5
+	  			withMaven(
+        			maven: 'M3', 
+        			mavenSettingsConfig: 'my-maven-settings', 
+        			mavenLocalRepo: '.repository') {
+        			sh "mvn clean install"
+        		}
 	  		}
 		}
 		stage('static analysis') {
