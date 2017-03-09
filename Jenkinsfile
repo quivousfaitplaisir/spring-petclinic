@@ -10,6 +10,7 @@ pipeline {
         			mavenLocalRepo: '.repository') {
         			sh "mvn clean install"
         		}
+        		stash name:"jar", includes:"target/\\*.jar"
 	  		}
 		}
 		stage('static analysis') {
@@ -33,6 +34,8 @@ pipeline {
 		}
 		stage('staging') {
 	  		steps {
+	  			unstash "jar"
+	  			sh 'ls -l target'
 	  			sleep 5
 	  		}
 		}
@@ -43,6 +46,8 @@ pipeline {
     	}
     	stage('deploy') {
 	  		steps {
+	  			unstash "jar"
+	  			sh 'ls -l target'
 	  			sleep 5
 	  		}
 		}
