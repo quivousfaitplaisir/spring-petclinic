@@ -16,7 +16,9 @@ pipeline {
 		stage('static analysis') {
 	  		agent { label 'build' }
 	  		steps {
-	  			sleep 5
+			    withSonarQubeEnv('Sonar') {
+			       sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+			    }
 	  		}
 		}
 		stage('acceptance tests') {
